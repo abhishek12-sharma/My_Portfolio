@@ -8,6 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="portfolio-db.js"></script>
   <link rel="stylesheet" href="admin.css"/>
 </head>
 <body>
@@ -105,6 +109,12 @@
       <a href="#" class="snav-item" data-section="contact" id="snav-contact">
         <i class="fa-solid fa-address-card"></i><span>Contact Info</span>
       </a>
+      <a href="#" class="snav-item" data-section="vision" id="snav-vision">
+        <i class="fa-solid fa-quote-left"></i><span>Vision / About</span>
+      </a>
+      <a href="#" class="snav-item" data-section="headings" id="snav-headings">
+        <i class="fa-solid fa-heading"></i><span>Section Headings</span>
+      </a>
       <a href="index.html" target="_blank" class="snav-item snav-preview">
         <i class="fa-solid fa-eye"></i><span>View Portfolio</span>
         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.65rem;opacity:.6;margin-left:auto"></i>
@@ -180,9 +190,13 @@
         </div>
 
         <!-- Live preview strip -->
+        <!-- DB Status (filled dynamically by admin.js) -->
+        <div class="dash-preview-banner" id="dash-db-status" style="margin-bottom:.8rem">
+          <i class="fa-solid fa-circle-notch fa-spin"></i> Checking database connection…
+        </div>
         <div class="dash-preview-banner">
           <i class="fa-solid fa-circle-info"></i>
-          All changes are saved to your browser storage and applied instantly on your portfolio page.
+          All changes sync to Supabase (cloud) when configured, or localStorage otherwise.
           <a href="index.html" target="_blank">Open Portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
       </section>
@@ -408,6 +422,73 @@
           </button>
         </div>
         <div id="hobbiesList" class="items-list hobbies-grid-list"></div>
+      </section>
+
+      <!-- ========== VISION / ABOUT EDITOR ========== -->
+      <section id="sec-vision" class="admin-section">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-quote-left"></i> Vision &amp; About</h1>
+          <p>Edit the text that appears in the <strong>My Vision</strong> and <strong>Who I Am</strong> sections.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-bullseye"></i> My Vision Section</div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Paragraph 1</label>
+            <textarea id="vision-p1" rows="5" placeholder="Write your first vision paragraph..."></textarea>
+          </div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Paragraph 2</label>
+            <textarea id="vision-p2" rows="5" placeholder="Write your second vision paragraph..."></textarea>
+          </div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Ambition Statement (the line at the bottom)</label>
+            <input id="vision-ambition" type="text" placeholder="My ambition is to..."/>
+          </div>
+          <button class="btn-admin btn-primary mt" id="saveVisionBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Vision
+          </button>
+        </div>
+
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-user"></i> Who I Am Section</div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Paragraph 1</label>
+            <textarea id="about-p1" rows="4" placeholder="I'm Abhishek Sharma..."></textarea>
+          </div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Paragraph 2</label>
+            <textarea id="about-p2" rows="4" placeholder="I enjoy crafting..."></textarea>
+          </div>
+          <div class="field-group" style="margin-bottom:1rem">
+            <label>Paragraph 3</label>
+            <textarea id="about-p3" rows="4" placeholder="When I'm not coding..."></textarea>
+          </div>
+          <button class="btn-admin btn-primary mt" id="saveAboutBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save About
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== SECTION HEADINGS EDITOR ========== -->
+      <section id="sec-headings" class="admin-section">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-heading"></i> Section Headings</h1>
+          <p>Customise the small tag and main title for every section on your portfolio.</p>
+        </div>
+
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-sliders"></i> All Section Headings</div>
+          <p style="font-size:.8rem;color:var(--a-text2);margin-bottom:1.4rem">
+            Each section has a <em>Tag</em> (the small coloured line like <code>// about me</code>) and a <em>Title</em>.
+          </p>
+
+          <div id="headings-form" class="headings-form-grid"></div>
+
+          <button class="btn-admin btn-primary mt" id="saveHeadingsBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save All Headings
+          </button>
+        </div>
       </section>
 
       <!-- ========== CONTACT ========== -->

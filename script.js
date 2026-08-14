@@ -84,26 +84,136 @@
 
     // ---- APPLY CONTACT DETAILS ----
     if (p) {
-      document.addEventListener('DOMContentLoaded', () => {
-        // Phone links
-        if (p.phone) document.querySelectorAll('[href^="tel:"]').forEach(a => { a.href=`tel:${p.phone}`; a.textContent=p.phone; });
-        // Email links
-        if (p.email) document.querySelectorAll('[href^="mailto:"]').forEach(a => { a.href=`mailto:${p.email}`; if(a.textContent.includes('@'))a.textContent=p.email; });
-        // GitHub
-        if (p.github) document.querySelectorAll('[href*="github.com"]').forEach(a => { a.href=p.github; if(a.textContent.includes('github'))a.textContent=p.github.replace('https://',''); });
-        // LinkedIn
-        if (p.linkedin) document.querySelectorAll('[href*="linkedin"]').forEach(a => { a.href=p.linkedin; });
-        // Instagram
-        if (p.instagram) document.querySelectorAll('[href*="instagram"]').forEach(a => { a.href=p.instagram; });
+      // Phone links
+      if (p.phone) document.querySelectorAll('[href^="tel:"]').forEach(a => { a.href=`tel:${p.phone}`; a.textContent=p.phone; });
+      // Email links
+      if (p.email) document.querySelectorAll('[href^="mailto:"]').forEach(a => { a.href=`mailto:${p.email}`; if(a.textContent.includes('@'))a.textContent=p.email; });
+      // GitHub
+      if (p.github) document.querySelectorAll('[href*="github.com"]').forEach(a => { a.href=p.github; if(a.textContent.includes('github'))a.textContent=p.github.replace('https://',''); });
+      // LinkedIn
+      if (p.linkedin) document.querySelectorAll('[href*="linkedin"]').forEach(a => { a.href=p.linkedin; });
+      // Instagram
+      if (p.instagram) document.querySelectorAll('[href*="instagram"]').forEach(a => { a.href=p.instagram; });
+    }
+
+    // ---- APPLY VISION TEXT ----
+    if (data.visionText) {
+      const v = data.visionText;
+      if (v.p1 && document.getElementById('vision-para-1'))
+        document.getElementById('vision-para-1').textContent = v.p1;
+      if (v.p2 && document.getElementById('vision-para-2'))
+        document.getElementById('vision-para-2').textContent = v.p2;
+      if (v.ambition) {
+        const ambEl = document.querySelector('.summary-ambition');
+        if (ambEl) ambEl.innerHTML = `<i class="fa-solid fa-bullseye"></i> ${escapeHtml(v.ambition)}`;
+      }
+    }
+
+    // ---- APPLY ABOUT TEXT ----
+    if (data.aboutText) {
+      const a = data.aboutText;
+      const aboutParas = document.querySelectorAll('.about-text > p');
+      if (a.p1 && aboutParas[0]) aboutParas[0].textContent = a.p1;
+      if (a.p2 && aboutParas[1]) aboutParas[1].textContent = a.p2;
+      if (a.p3 && aboutParas[2]) aboutParas[2].textContent = a.p3;
+    }
+
+    // ---- APPLY SECTION HEADINGS ----
+    if (data.headings) {
+      const h = data.headings;
+      const idMap = {
+        vision:   { tag:'sec-tag-vision',   title:'sec-title-vision' },
+        about:    { tag:'sec-tag-about',    title:'sec-title-about' },
+        skills:   { tag:'sec-tag-skills' },
+        projects: { tag:'sec-tag-projects' },
+        certs:    { tag:'sec-tag-certs' },
+        edu:      { tag:'sec-tag-edu' },
+        hobbies:  { tag:'sec-tag-hobbies' },
+        contact:  { tag:'sec-tag-contact' },
+      };
+      Object.entries(h).forEach(([sec, vals]) => {
+        const ids = idMap[sec];
+        if (!ids) return;
+        if (vals.tag && ids.tag) {
+          const el = document.getElementById(ids.tag);
+          if (el) el.textContent = vals.tag;
+        }
+        if (vals.title && ids.title) {
+          const el = document.getElementById(ids.title);
+          if (el) el.innerHTML = vals.title;
+        }
       });
     }
 
-  } catch(e) { /* silently fail if localStorage is unavailable */ }
+  } catch(e) { console.warn('[portfolio] Override apply failed:', e.message); }
 
   function escapeHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 })();
+
+/* ==========================================
+   ASYNC SUPABASE OVERRIDE (runs after DOM ready)
+   Reads fresh data from cloud and re-applies
+   ========================================== */
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    if (!window.portfolioDB) return;
+    const data = await window.portfolioDB.load();
+    if (!data || Object.keys(data).length === 0) return;
+
+    const p = data.profile;
+
+    // Re-apply photo (in case cloud has updated photo)
+    if (p?.photo) {
+      const photoSize = p.photoSize || 225;
+      const ringSize  = photoSize + 15;
+      const ring  = document.querySelector('.avatar-ring');
+      const inner = document.querySelector('.avatar-inner');
+      if (ring)  { ring.style.width  = ringSize  + 'px'; ring.style.height  = ringSize  + 'px'; }
+      if (inner) { inner.style.width = photoSize + 'px'; inner.style.height = photoSize + 'px'; }
+
+      const places = p.photoPlaces || ['hero'];
+      if (places.includes('hero')) {
+        const img = document.getElementById('profilePhoto');
+        if (img) { img.src = p.photo; img.style.display = 'block'; }
+        const fb = document.getElementById('avatarFallback');
+        if (fb) fb.style.display = 'none';
+      }
+    }
+
+    // Re-apply vision text
+    if (data.visionText) {
+      const v = data.visionText;
+      if (v.p1) { const el = document.getElementById('vision-para-1'); if (el) el.textContent = v.p1; }
+      if (v.p2) { const el = document.getElementById('vision-para-2'); if (el) el.textContent = v.p2; }
+      if (v.ambition) {
+        const el = document.querySelector('.summary-ambition');
+        if (el) el.innerHTML = `<i class="fa-solid fa-bullseye"></i> ${v.ambition}`;
+      }
+    }
+
+    // Re-apply about text
+    if (data.aboutText) {
+      const paras = document.querySelectorAll('.about-text > p');
+      if (data.aboutText.p1 && paras[0]) paras[0].textContent = data.aboutText.p1;
+      if (data.aboutText.p2 && paras[1]) paras[1].textContent = data.aboutText.p2;
+      if (data.aboutText.p3 && paras[2]) paras[2].textContent = data.aboutText.p3;
+    }
+
+    // Re-apply headings
+    if (data.headings) {
+      const h = data.headings;
+      Object.entries(h).forEach(([sec, vals]) => {
+        const tagEl   = document.getElementById(`sec-tag-${sec}`);
+        const titleEl = document.getElementById(`sec-title-${sec}`);
+        if (vals.tag   && tagEl)   tagEl.textContent   = vals.tag;
+        if (vals.title && titleEl) titleEl.innerHTML    = vals.title;
+      });
+    }
+  } catch(e) { /* silently fail */ }
+});
+
 
 /* ==========================================
    EMAILJS CONFIGURATION
@@ -196,13 +306,13 @@ window.addEventListener('scroll', updateActiveNav, { passive: true });
    ========================================== */
 const typewriterEl = document.getElementById('typewriter');
 const roles = [
-  'Full-Stack Developer',
+  'Aspiring Data Scientist',
   'ML / AI Enthusiast',
   'MCA Student @ LPU',
   'Problem Solver',
   'Java Developer',
   'Python Programmer',
-  'Data Science Aspirant',
+  'Full-Stack Developer',
 ];
 let roleIndex = 0, charIndex = 0, isDeleting = false, typeDelay = 110;
 

@@ -85,23 +85,21 @@ const DEFAULT_DATA = {
 };
 
 /* =============================================
-   DATA HELPERS
+   DATA HELPERS  (Supabase + localStorage fallback)
    ============================================= */
-function loadData() {
+async function loadData() {
   try {
-    const stored = localStorage.getItem(DATA_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      // Deep merge with defaults to handle new fields
-      return deepMerge(DEFAULT_DATA, parsed);
-    }
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    const stored = await window.portfolioDB.load();
+    return deepMerge(DEFAULT_DATA, stored);
+  } catch(e) {
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
 }
 
-function saveData(data) {
-  localStorage.setItem(DATA_KEY, JSON.stringify(data));
-  showSaveIndicator();
+async function saveData(data) {
+  const ok = await window.portfolioDB.save(data);
+  showSaveIndicator(ok);
+  return ok;
 }
 
 function deepMerge(defaults, overrides) {
@@ -121,7 +119,7 @@ function uid() {
   return Math.random().toString(36).substr(2, 9);
 }
 
-let portfolioData = loadData();
+let portfolioData = {}; // loaded async in initAdmin
 
 /* =============================================
    AUTH
@@ -184,10 +182,13 @@ document.getElementById('logoutBtn').addEventListener('click', () => logout());
 /* =============================================
    SAVE INDICATOR
    ============================================= */
-function showSaveIndicator() {
+function showSaveIndicator(isCloud) {
   const el = document.getElementById('saveIndicator');
+  el.innerHTML = isCloud
+    ? '<i class="fa-solid fa-cloud-arrow-up"></i> Saved to Cloud'
+    : '<i class="fa-solid fa-floppy-disk"></i> Saved Locally';
   el.style.display = 'flex';
-  setTimeout(() => { el.style.display = 'none'; }, 2500);
+  setTimeout(() => { el.style.display = 'none'; }, 3000);
 }
 
 /* =============================================
@@ -232,8 +233,25 @@ function goSection(name) {
 /* =============================================
    INIT ADMIN
    ============================================= */
-function initAdmin() {
-  portfolioData = loadData();
+async function initAdmin() {
+  // Show loading state
+  document.getElementById('adminContent').style.opacity = '0.5';
+
+  portfolioData = await loadData();
+
+  document.getElementById('adminContent').style.opacity = '1';
+
+  // DB status badge on dashboard
+  const isCloud = window.portfolioDB.isCloud();
+  const banner  = document.getElementById('dash-db-status');
+  if (banner) {
+    banner.innerHTML = isCloud
+      ? '<i class="fa-solid fa-cloud" style="color:var(--a-green)"></i> Connected to <strong>Supabase</strong> — changes sync across all devices!'
+      : '<i class="fa-solid fa-hard-drive" style="color:var(--a-gold)"></i> Using <strong>localStorage</strong> only. <a href="#" onclick="goSection(\"headings\")">Add Supabase credentials</a> in supabase-config.js to go cloud.';
+    banner.style.borderColor = isCloud ? 'rgba(34,197,94,.3)' : 'rgba(245,158,11,.3)';
+    banner.style.background  = isCloud ? 'rgba(34,197,94,.07)' : 'rgba(245,158,11,.07)';
+  }
+
   loadProfileUI();
   loadPhotoUI();
   renderProjects();
@@ -242,6 +260,8 @@ function initAdmin() {
   renderEducation();
   renderHobbies();
   renderContactUI();
+  loadVisionUI();
+  renderHeadingsForm();
   updateDashStats();
 }
 
@@ -805,3 +825,100 @@ function slugify(str) {
 }
 
 console.log('%c🛡️ Admin Panel', 'color:#6c63ff;font-size:1.2rem;font-weight:bold;font-family:monospace;');
+
+/* =============================================
+   VISION / ABOUT EDITOR
+   ============================================= */
+const DEFAULT_VISION = {
+  p1: `Fueling innovation with every line of code, I am Abhishek Sharma, an MCA student from Lovely Professional University. My journey is deeply rooted in the exciting intersection of Artificial Intelligence, Machine Learning, and Data Analytics. I'm not just studying these fields; I'm actively building a robust foundation in programming, algorithms, databases, and system architecture, always eager to apply this knowledge to practical, real-world challenges.`,
+  p2: `I thrive on harnessing the power of data to craft impactful solutions — from predictive modeling that anticipates future trends to AI-driven applications that redefine efficiency. My hands-on approach recently led me to develop a web application that seamlessly integrates AI models, a dynamic React-based UI, and robust backend services to automatically detect faces and mark student attendance.`,
+  ambition: `My ambition is to evolve into a leading Data Scientist or AI Engineer, pioneering technology that leaves a lasting positive impact on the world.`,
+};
+
+const DEFAULT_ABOUT = {
+  p1: `I'm Abhishek Sharma, an MCA student at Lovely Professional University (Phagwara, Punjab) with a strong foundation in computer science and a CGPA of 8.15.`,
+  p2: `I enjoy crafting full-stack solutions that combine clean code with intelligent design. From building a 3D ResNet-18 powered activity recognition system to engineering a full Java Swing desktop app, I love tackling real-world problems with technology.`,
+  p3: `When I'm not coding, I'm exploring research papers in deep learning, optimizing data pipelines, or participating in competitive programming challenges.`,
+};
+
+function loadVisionUI() {
+  const v = portfolioData.visionText  || DEFAULT_VISION;
+  const a = portfolioData.aboutText   || DEFAULT_ABOUT;
+  document.getElementById('vision-p1').value       = v.p1       || DEFAULT_VISION.p1;
+  document.getElementById('vision-p2').value       = v.p2       || DEFAULT_VISION.p2;
+  document.getElementById('vision-ambition').value = v.ambition || DEFAULT_VISION.ambition;
+  document.getElementById('about-p1').value        = a.p1       || DEFAULT_ABOUT.p1;
+  document.getElementById('about-p2').value        = a.p2       || DEFAULT_ABOUT.p2;
+  document.getElementById('about-p3').value        = a.p3       || DEFAULT_ABOUT.p3;
+}
+
+document.getElementById('saveVisionBtn').addEventListener('click', async () => {
+  portfolioData.visionText = {
+    p1:       document.getElementById('vision-p1').value.trim(),
+    p2:       document.getElementById('vision-p2').value.trim(),
+    ambition: document.getElementById('vision-ambition').value.trim(),
+  };
+  await saveData(portfolioData);
+  showToast('✅ Vision saved! Reload portfolio to see changes.');
+});
+
+document.getElementById('saveAboutBtn').addEventListener('click', async () => {
+  portfolioData.aboutText = {
+    p1: document.getElementById('about-p1').value.trim(),
+    p2: document.getElementById('about-p2').value.trim(),
+    p3: document.getElementById('about-p3').value.trim(),
+  };
+  await saveData(portfolioData);
+  showToast('✅ About section saved! Reload portfolio to see changes.');
+});
+
+/* =============================================
+   SECTION HEADINGS EDITOR
+   ============================================= */
+const HEADING_FIELDS = [
+  { id:'vision',   label:'My Vision',           defTag:'// professional summary', defTitle:'My Vision' },
+  { id:'about',    label:'Who I Am',             defTag:'// about me',             defTitle:'Who I Am' },
+  { id:'skills',   label:'Skills & Technologies',defTag:'// tech stack',           defTitle:'Skills & Technologies' },
+  { id:'projects', label:'Featured Projects',    defTag:'// my work',              defTitle:'Featured Projects' },
+  { id:'certs',    label:'Certificates',         defTag:'// achievements',         defTitle:'Certificates & Credentials' },
+  { id:'edu',      label:'Education',            defTag:'// academic journey',     defTitle:'My Education' },
+  { id:'hobbies',  label:'Hobbies & Interests',  defTag:'// beyond the screen',    defTitle:'Hobbies & Interests' },
+  { id:'contact',  label:'Contact',              defTag:'// get in touch',         defTitle:"Let's Connect" },
+];
+
+function renderHeadingsForm() {
+  const h   = portfolioData.headings || {};
+  const el  = document.getElementById('headings-form');
+  el.innerHTML = HEADING_FIELDS.map(f => `
+    <div class="heading-editor-row">
+      <div class="hrow-label">${esc(f.label)}</div>
+      <div class="field-group">
+        <label>Tag <small>(small line)</small></label>
+        <input id="htag-${f.id}" value="${esc(h[f.id]?.tag || f.defTag)}"/>
+      </div>
+      <div class="field-group">
+        <label>Title</label>
+        <input id="htitle-${f.id}" value="${esc(h[f.id]?.title || f.defTitle)}"/>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('saveHeadingsBtn').addEventListener('click', async () => {
+  portfolioData.headings = {};
+  HEADING_FIELDS.forEach(f => {
+    portfolioData.headings[f.id] = {
+      tag:   document.getElementById(`htag-${f.id}`).value.trim(),
+      title: document.getElementById(`htitle-${f.id}`).value.trim(),
+    };
+  });
+  await saveData(portfolioData);
+  showToast('✅ Section headings saved! Reload portfolio to apply.');
+});
+
+/* =============================================
+   UPDATE ALL SAVE HANDLERS TO ASYNC
+   ============================================= */
+// Patch all existing click handlers that call saveData to work with async
+// (They already call await saveData internally after our change)
+

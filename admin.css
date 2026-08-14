@@ -535,6 +535,23 @@ input,textarea,select { font-family:'Inter',sans-serif; }
 .preset-btn:hover { background:rgba(108,99,255,.2); border-color:var(--a-accent); color:var(--a-text); }
 .preset-btn.active { background:var(--a-grad); border-color:transparent; color:#fff; box-shadow:0 3px 12px rgba(108,99,255,.4); }
 
+/* Headings editor */
+.headings-form-grid { display:flex; flex-direction:column; gap:1.2rem; }
+.heading-editor-row {
+  background:rgba(108,99,255,.05);
+  border:1px solid var(--a-border);
+  border-radius:var(--radius-sm);
+  padding:1.1rem 1.3rem;
+  display:grid;
+  grid-template-columns:160px 1fr 1fr;
+  align-items:center; gap:1rem;
+}
+.hrow-label { font-size:.82rem; font-weight:700; color:var(--a-text2); }
+@media(max-width:768px) {
+  .heading-editor-row { grid-template-columns:1fr; }
+}
+
+
 
 /* ==================================================
    ITEMS LIST (Projects / Certs / Edu / Hobbies)
