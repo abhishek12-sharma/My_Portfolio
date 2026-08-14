@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhishek Sharma | MCA Student & Developer</title>
+  <meta name="description" content="Portfolio of Abhishek Sharma — MCA Student, Full-Stack Developer, and ML Enthusiast from Lovely Professional University." />
+  <meta name="keywords" content="Abhishek Sharma, Developer, Portfolio, Python, Java, Machine Learning, FastAPI, React" />
+  <meta name="author" content="Abhishek Sharma" />
+  <meta property="og:title" content="Abhishek Sharma | Developer Portfolio" />
+  <meta property="og:description" content="MCA Student | Full-Stack Developer | ML Enthusiast" />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =========================================
+       NAVBAR
+  ========================================== -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>AS<span class="logo-bracket">/&gt;</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home"         class="nav-link active" id="nav-home">Home</a></li>
+        <li><a href="#about"        class="nav-link" id="nav-about">About</a></li>
+        <li><a href="#skills"       class="nav-link" id="nav-skills">Skills</a></li>
+        <li><a href="#projects"     class="nav-link" id="nav-projects">Projects</a></li>
+        <li><a href="#certificates" class="nav-link" id="nav-certificates">Certificates</a></li>
+        <li><a href="#education"    class="nav-link" id="nav-education">Education</a></li>
+        <li><a href="#contact"      class="nav-link" id="nav-contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="fa-solid fa-sun"  id="themeIconSun"></i>
+          <i class="fa-solid fa-moon" id="themeIconMoon"></i>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================
+       HERO SECTION
+  ========================================== -->
+  <section id="home" class="hero">
+    <canvas id="particleCanvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for Opportunities
+      </div>
+      <h1 class="hero-name">
+        Hi, I'm <span class="gradient-text">Abhishek</span><br />
+        <span class="hero-title-typewriter" id="typewriter"></span>
+        <span class="cursor">|</span>
+      </h1>
+      <p class="hero-desc">
+        MCA student at <strong>Lovely Professional University</strong> passionate about building
+        intelligent, scalable applications — from ML-powered backends to polished front-end experiences.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary" id="hero-projects-btn">
+          <i class="fa-solid fa-rocket"></i> View Projects
+        </a>
+        <a href="#contact" class="btn btn-ghost" id="hero-contact-btn">
+          <i class="fa-solid fa-paper-plane"></i> Get In Touch
+        </a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://www.linkedin.com/in/abhishek" target="_blank" rel="noopener noreferrer" class="social-icon" id="social-linkedin" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/abhishek12-sharma" target="_blank" rel="noopener noreferrer" class="social-icon" id="social-github" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://www.instagram.com/_abhishek_sharma_12_/" target="_blank" rel="noopener noreferrer" class="social-icon" id="social-instagram" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="mailto:amansharmaa43963114@gmail.com" class="social-icon" id="social-email" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Visual with Photo -->
+    <div class="hero-visual">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <!--
+            TO ADD YOUR PHOTO:
+            1. Copy your photo file into the portfolio folder
+            2. Rename it to "photo.jpg"
+            The image will appear automatically.
+          -->
+          <img
+            src="photo.jpg"
+            alt="Abhishek Sharma"
+            class="profile-photo"
+            id="profilePhoto"
+            onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';"
+          />
+          <span class="avatar-initials" id="avatarFallback">AS</span>
+        </div>
+        <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+        <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+        <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
+      </div>
+      <div class="floating-cards">
+        <div class="float-card fc1"><i class="fa-brands fa-python"></i><span>Python</span></div>
+        <div class="float-card fc2"><i class="fa-brands fa-java"></i><span>Java</span></div>
+        <div class="float-card fc3"><i class="fa-solid fa-brain"></i><span>ML / AI</span></div>
+        <div class="float-card fc4"><i class="fa-solid fa-database"></i><span>Databases</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       PROFESSIONAL SUMMARY SECTION
+  ========================================== -->
+  <section id="summary" class="section summary-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// professional summary</span>
+        <h2 class="section-title">My <span class="gradient-text">Vision</span></h2>
+      </div>
+      <div class="summary-card reveal">
+        <div class="summary-quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <p class="summary-text">
+          Fueling innovation with every line of code, I am <strong>Abhishek Sharma</strong>, an MCA student from
+          Lovely Professional University. My journey is deeply rooted in the exciting intersection of
+          <strong>Artificial Intelligence, Machine Learning, and Data Analytics</strong>. I'm not just studying
+          these fields; I'm actively building a robust foundation in programming, algorithms, databases, and
+          system architecture, always eager to apply this knowledge to practical, real-world challenges.
+        </p>
+        <p class="summary-text">
+          I thrive on harnessing the power of data to craft impactful solutions — from predictive modeling that
+          anticipates future trends to AI-driven applications that redefine efficiency. My hands-on approach
+          recently led me to develop a web application that seamlessly integrates AI models, a dynamic React-based UI,
+          and robust backend services to automatically detect faces and mark student attendance.
+        </p>
+        <div class="summary-domains">
+          <div class="domain-pill">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Data Science &amp; Analytics — Python, SQL, Data Visualization</span>
+          </div>
+          <div class="domain-pill">
+            <i class="fa-solid fa-robot"></i>
+            <span>AI &amp; Machine Learning — CNN, RNN, Supervised &amp; Unsupervised Learning</span>
+          </div>
+          <div class="domain-pill">
+            <i class="fa-solid fa-code"></i>
+            <span>Software Development — React, ML model integration, REST APIs</span>
+          </div>
+          <div class="domain-pill">
+            <i class="fa-brands fa-cloudflare"></i>
+            <span>Big Data &amp; Cloud — Scalable AI deployment solutions</span>
+          </div>
+        </div>
+        <p class="summary-ambition">
+          <i class="fa-solid fa-bullseye"></i>
+          My ambition is to evolve into a leading <strong>Data Scientist or AI Engineer</strong>, pioneering
+          technology that leaves a lasting positive impact on the world.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       ABOUT SECTION
+  ========================================== -->
+  <section id="about" class="section about-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// about me</span>
+        <h2 class="section-title">Who I <span class="gradient-text">Am</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            I'm <strong>Abhishek Sharma</strong>, an MCA student at Lovely Professional University (Phagwara, Punjab)
+            with a strong foundation in computer science and a CGPA of <strong>8.15</strong>.
+          </p>
+          <p>
+            I enjoy crafting full-stack solutions that combine clean code with intelligent design. From building
+            a 3D ResNet-18 powered activity recognition system to engineering a full Java Swing desktop app,
+            I love tackling real-world problems with technology.
+          </p>
+          <p>
+            When I'm not coding, I'm exploring research papers in deep learning, optimizing data pipelines,
+            or participating in competitive programming challenges.
+          </p>
+          <div class="about-info-grid">
+            <div class="info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Fatehgarh, Uttar Pradesh</span>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-phone"></i>
+              <span>+91 6388762269</span>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>amansharmaa43963114@gmail.com</span>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>MCA @ LPU | CGPA: 8.15</span>
+            </div>
+          </div>
+          <a href="#contact" class="btn btn-primary mt-2" id="about-contact-btn">
+            <i class="fa-solid fa-handshake"></i> Let's Collaborate
+          </a>
+        </div>
+        <div class="about-stats reveal reveal-right">
+          <div class="stat-card">
+            <div class="stat-number" data-target="3">0</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="91">0</div>
+            <div class="stat-label">ML Accuracy %</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="5">0</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="8">0</div>
+            <div class="stat-label">Technologies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SKILLS SECTION
+  ========================================== -->
+  <section id="skills" class="section skills-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// tech stack</span>
+        <h2 class="section-title">Skills & <span class="gradient-text">Technologies</span></h2>
+      </div>
+
+      <div class="skills-grid reveal">
+        <!-- Languages -->
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-code"></i>
+            <h3>Languages</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" id="skill-cpp"><i class="fa-solid fa-c"></i> C++</span>
+            <span class="skill-tag" id="skill-python"><i class="fa-brands fa-python"></i> Python</span>
+            <span class="skill-tag" id="skill-java"><i class="fa-brands fa-java"></i> Java</span>
+            <span class="skill-tag" id="skill-sql"><i class="fa-solid fa-database"></i> SQL</span>
+          </div>
+        </div>
+
+        <!-- Frameworks -->
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-layer-group"></i>
+            <h3>Frameworks</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" id="skill-react"><i class="fa-brands fa-react"></i> React.js</span>
+            <span class="skill-tag" id="skill-node"><i class="fa-brands fa-node-js"></i> Node.js</span>
+            <span class="skill-tag" id="skill-flask"><i class="fa-solid fa-flask"></i> Flask</span>
+            <span class="skill-tag" id="skill-fastapi"><i class="fa-solid fa-bolt"></i> FastAPI</span>
+            <span class="skill-tag" id="skill-pytorch"><i class="fa-solid fa-fire"></i> PyTorch</span>
+            <span class="skill-tag" id="skill-opencv"><i class="fa-solid fa-eye"></i> OpenCV</span>
+          </div>
+        </div>
+
+        <!-- Databases -->
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-server"></i>
+            <h3>Databases</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" id="skill-mysql"><i class="fa-solid fa-database"></i> MySQL</span>
+            <span class="skill-tag" id="skill-sqlite"><i class="fa-solid fa-database"></i> SQLite</span>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="skill-category">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-wrench"></i>
+            <h3>Tools & Technologies</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" id="skill-git"><i class="fa-brands fa-git-alt"></i> Git</span>
+            <span class="skill-tag" id="skill-github"><i class="fa-brands fa-github"></i> GitHub</span>
+            <span class="skill-tag" id="skill-linux"><i class="fa-brands fa-linux"></i> Linux</span>
+            <span class="skill-tag" id="skill-html"><i class="fa-brands fa-html5"></i> HTML5</span>
+            <span class="skill-tag" id="skill-css"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+            <span class="skill-tag" id="skill-api"><i class="fa-solid fa-plug"></i> REST APIs</span>
+          </div>
+        </div>
+
+        <!-- Domain Skills -->
+        <div class="skill-category skill-cat-wide">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-brain"></i>
+            <h3>Domain Skills</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" id="skill-dsa"><i class="fa-solid fa-diagram-project"></i> DSA (C++)</span>
+            <span class="skill-tag" id="skill-dbms"><i class="fa-solid fa-table"></i> DBMS</span>
+            <span class="skill-tag" id="skill-os"><i class="fa-solid fa-microchip"></i> Operating Systems</span>
+            <span class="skill-tag" id="skill-oop"><i class="fa-solid fa-object-group"></i> OOP</span>
+            <span class="skill-tag" id="skill-cn"><i class="fa-solid fa-network-wired"></i> Computer Networks</span>
+          </div>
+        </div>
+
+        <!-- Soft Skills -->
+        <div class="skill-category skill-cat-wide">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-people-group"></i>
+            <h3>Soft Skills</h3>
+          </div>
+          <div class="skill-tags soft-skills-tags">
+            <span class="skill-tag soft-tag" id="skill-ps">
+              <i class="fa-solid fa-puzzle-piece"></i> Problem Solving
+            </span>
+            <span class="skill-tag soft-tag" id="skill-lead">
+              <i class="fa-solid fa-crown"></i> Leadership
+            </span>
+            <span class="skill-tag soft-tag" id="skill-adapt">
+              <i class="fa-solid fa-arrows-rotate"></i> Adaptability
+            </span>
+            <span class="skill-tag soft-tag" id="skill-dm">
+              <i class="fa-solid fa-scale-balanced"></i> Decision Making
+            </span>
+            <span class="skill-tag soft-tag" id="skill-pro">
+              <i class="fa-solid fa-briefcase"></i> Professionalism
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       PROJECTS SECTION
+  ========================================== -->
+  <section id="projects" class="section projects-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// my work</span>
+        <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1: HAR -->
+        <article class="project-card reveal" id="project-har">
+          <div class="project-header">
+            <div class="project-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/abhishek12-sharma/Spatiotemoral-Human-Activity-Recongniser"
+                 target="_blank" rel="noopener noreferrer" class="proj-link" id="har-github-link" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-badge badge-ml">ML / AI</div>
+          <h3 class="project-title">Human Activity Recognition</h3>
+          <p class="project-dates"><i class="fa-regular fa-calendar"></i> Jan 2026 – Jul 2026</p>
+          <p class="project-desc">
+            AI-powered recognition system using a fine-tuned <strong>3D ResNet-18 (R3D-18)</strong> model,
+            achieving <strong>91% validation accuracy</strong> on the UCF-101 dataset through transfer learning.
+            Features real-time webcam recognition, FastAPI backend with JWT auth, and cross-platform support.
+          </p>
+          <ul class="project-highlights">
+            <li><i class="fa-solid fa-check-circle"></i> 91% accuracy on UCF-101 dataset</li>
+            <li><i class="fa-solid fa-check-circle"></i> JWT auth + RBAC with SQLite & SQLAlchemy</li>
+            <li><i class="fa-solid fa-check-circle"></i> Real-time video analytics via OpenCV</li>
+            <li><i class="fa-solid fa-check-circle"></i> Apple MPS / CUDA / CPU support</li>
+          </ul>
+          <div class="project-tech">
+            <span>Python</span><span>PyTorch</span><span>FastAPI</span><span>OpenCV</span><span>SQLite</span>
+          </div>
+        </article>
+
+        <!-- Project 2: ShopEasy -->
+        <article class="project-card reveal" id="project-shopeasy">
+          <div class="project-header">
+            <div class="project-icon"><i class="fa-solid fa-shop"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/abhishek12-sharma/ShopEasyy"
+                 target="_blank" rel="noopener noreferrer" class="proj-link" id="shopeasy-github-link" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-badge badge-java">Java App</div>
+          <h3 class="project-title">ShopEasy</h3>
+          <p class="project-dates"><i class="fa-regular fa-calendar"></i> Jan 2026 – Jun 2026</p>
+          <p class="project-desc">
+            A <strong>2-tier Java Swing</strong> desktop e-commerce application with secure user authentication,
+            dynamic cart management, and real-time order tracking. Built with MVC pattern and a MySQL backend.
+          </p>
+          <ul class="project-highlights">
+            <li><i class="fa-solid fa-check-circle"></i> Secure authentication & session management</li>
+            <li><i class="fa-solid fa-check-circle"></i> Dynamic cart & real-time order tracking</li>
+            <li><i class="fa-solid fa-check-circle"></i> Category-based product filtering & search</li>
+            <li><i class="fa-solid fa-check-circle"></i> JDBC + MySQL database backend</li>
+          </ul>
+          <div class="project-tech">
+            <span>Java</span><span>Java Swing</span><span>XAMPP</span><span>MySQL</span><span>MVC</span>
+          </div>
+        </article>
+
+        <!-- Project 3: Spotify Clone -->
+        <article class="project-card reveal" id="project-spotify">
+          <div class="project-header">
+            <div class="project-icon"><i class="fa-brands fa-spotify"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/abhishek12-sharma/Spotify-Clone"
+                 target="_blank" rel="noopener noreferrer" class="proj-link" id="spotify-github-link" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-badge badge-web">Full-Stack</div>
+          <h3 class="project-title">Spotify Clone</h3>
+          <p class="project-dates"><i class="fa-regular fa-calendar"></i> Feb 2026 – Apr 2026</p>
+          <p class="project-desc">
+            A full-stack <strong>Spotify-inspired music streaming platform</strong> with secure authentication,
+            dynamic playlist management, real-time audio playback, song upload support, and multiple playlist creation.
+          </p>
+          <ul class="project-highlights">
+            <li><i class="fa-solid fa-check-circle"></i> Secure user authentication & sessions</li>
+            <li><i class="fa-solid fa-check-circle"></i> Song upload & playlist management</li>
+            <li><i class="fa-solid fa-check-circle"></i> Real-time audio playback integration</li>
+            <li><i class="fa-solid fa-check-circle"></i> PHP + MySQL scalable media backend</li>
+          </ul>
+          <div class="project-tech">
+            <span>PHP</span><span>MySQL</span><span>JavaScript</span><span>HTML5</span><span>CSS3</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CERTIFICATES SECTION
+  ========================================== -->
+  <section id="certificates" class="section certs-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// achievements</span>
+        <h2 class="section-title">Certificates & <span class="gradient-text">Credentials</span></h2>
+      </div>
+
+      <div class="certs-grid">
+
+        <div class="cert-card reveal" id="cert-ds101">
+          <div class="cert-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="cert-info">
+            <h4>Data Science 101</h4>
+            <span class="cert-issuer">Cognitive AI</span>
+          </div>
+          <div class="cert-meta">
+            <div class="cert-date"><i class="fa-regular fa-calendar-check"></i> Jun 2026</div>
+            <a href="https://drive.google.com/file/d/1tmqZP7_ROuDco0BA1pe8wB9URd2ofjaO/view?usp=drive_link"
+               target="_blank" rel="noopener noreferrer" class="cert-view-btn" id="cert-ds-link">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+            </a>
+          </div>
+        </div>
+
+        <div class="cert-card reveal" id="cert-sql">
+          <div class="cert-icon"><i class="fa-solid fa-database"></i></div>
+          <div class="cert-info">
+            <h4>SQL and Relational Databases 101</h4>
+            <span class="cert-issuer">Cognitive AI</span>
+          </div>
+          <div class="cert-meta">
+            <div class="cert-date"><i class="fa-regular fa-calendar-check"></i> Jun 2026</div>
+            <a href="https://drive.google.com/file/d/1Kc6-ePkfF0_vXB00TDYhsd2rKIh2fl9h/view"
+               target="_blank" rel="noopener noreferrer" class="cert-view-btn" id="cert-sql-link">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+            </a>
+          </div>
+        </div>
+
+        <div class="cert-card reveal" id="cert-java">
+          <div class="cert-icon"><i class="fa-brands fa-java"></i></div>
+          <div class="cert-info">
+            <h4>Java Programming</h4>
+            <span class="cert-issuer">iamNeo</span>
+          </div>
+          <div class="cert-meta">
+            <div class="cert-date"><i class="fa-regular fa-calendar-check"></i> Jun 2026</div>
+            <a href="https://drive.google.com/file/d/1Gt-LPZDkO_21JtMoyh4r03pck7lSyu9B/view"
+               target="_blank" rel="noopener noreferrer" class="cert-view-btn" id="cert-java-link">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+            </a>
+          </div>
+        </div>
+
+        <div class="cert-card reveal" id="cert-dap">
+          <div class="cert-icon"><i class="fa-brands fa-python"></i></div>
+          <div class="cert-info">
+            <h4>Data Analysis with Python</h4>
+            <span class="cert-issuer">Cognitive AI</span>
+          </div>
+          <div class="cert-meta">
+            <div class="cert-date"><i class="fa-regular fa-calendar-check"></i> Jun 2026</div>
+            <a href="https://drive.google.com/file/d/1p2oB0_UTeZPz7jUI0ohCy3-gbYVf38YT/view"
+               target="_blank" rel="noopener noreferrer" class="cert-view-btn" id="cert-dap-link">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+            </a>
+          </div>
+        </div>
+
+        <div class="cert-card reveal" id="cert-pe">
+          <div class="cert-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="cert-info">
+            <h4>Prompt Engineering for Everyone</h4>
+            <span class="cert-issuer">Cognitive AI</span>
+          </div>
+          <div class="cert-meta">
+            <div class="cert-date"><i class="fa-regular fa-calendar-check"></i> Jun 2026</div>
+            <a href="https://drive.google.com/file/d/11Gxetgcyp1gpNrv7-PVq-kUX6_PkFxZN/view"
+               target="_blank" rel="noopener noreferrer" class="cert-view-btn" id="cert-pe-link">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       EDUCATION SECTION
+  ========================================== -->
+  <section id="education" class="section edu-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// academic journey</span>
+        <h2 class="section-title">My <span class="gradient-text">Education</span></h2>
+      </div>
+
+      <div class="edu-timeline">
+
+        <div class="edu-item reveal" id="edu-lpu">
+          <div class="edu-connector">
+            <div class="edu-dot"></div>
+            <div class="edu-line"></div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-card-header">
+              <div class="edu-icon"><i class="fa-solid fa-university"></i></div>
+              <div class="edu-period">2025 – 2027</div>
+            </div>
+            <h3>Master of Computer Applications (MCA)</h3>
+            <p class="edu-inst">Lovely Professional University</p>
+            <p class="edu-loc"><i class="fa-solid fa-location-dot"></i> Phagwara, Punjab</p>
+            <div class="edu-score"><span class="score-label">CGPA</span><span class="score-value">8.15</span></div>
+          </div>
+        </div>
+
+        <div class="edu-item reveal" id="edu-bsc">
+          <div class="edu-connector">
+            <div class="edu-dot"></div>
+            <div class="edu-line"></div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-card-header">
+              <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="edu-period">2022 – 2025</div>
+            </div>
+            <h3>Bachelor of Science (B.Sc.)</h3>
+            <p class="edu-inst">Shri Sagar Singh Somwati Mahavidyalaya</p>
+            <p class="edu-loc"><i class="fa-solid fa-location-dot"></i> Bahorikpur, Uttar Pradesh</p>
+            <div class="edu-score"><span class="score-label">CGPA</span><span class="score-value">8.21</span></div>
+          </div>
+        </div>
+
+        <div class="edu-item reveal" id="edu-inter">
+          <div class="edu-connector">
+            <div class="edu-dot"></div>
+            <div class="edu-line"></div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-card-header">
+              <div class="edu-icon"><i class="fa-solid fa-school"></i></div>
+              <div class="edu-period">2021 – 2022</div>
+            </div>
+            <h3>Intermediate (12th Grade)</h3>
+            <p class="edu-inst">Kendriya Vidyalaya RRC</p>
+            <p class="edu-loc"><i class="fa-solid fa-location-dot"></i> Fatehgarh, Uttar Pradesh</p>
+            <div class="edu-score"><span class="score-label">Percentage</span><span class="score-value">83.20%</span></div>
+          </div>
+        </div>
+
+        <div class="edu-item reveal" id="edu-matric">
+          <div class="edu-connector">
+            <div class="edu-dot"></div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-card-header">
+              <div class="edu-icon"><i class="fa-solid fa-book-open"></i></div>
+              <div class="edu-period">2019 – 2020</div>
+            </div>
+            <h3>Matriculation (10th Grade)</h3>
+            <p class="edu-inst">Kendriya Vidyalaya RRC</p>
+            <p class="edu-loc"><i class="fa-solid fa-location-dot"></i> Fatehgarh, Uttar Pradesh</p>
+            <div class="edu-score"><span class="score-label">Percentage</span><span class="score-value">84%</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       HOBBIES SECTION
+  ========================================== -->
+  <section id="hobbies" class="section hobbies-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// beyond the screen</span>
+        <h2 class="section-title">Hobbies & <span class="gradient-text">Interests</span></h2>
+      </div>
+      <div class="hobbies-grid">
+        <div class="hobby-card reveal" id="hobby-rubik">
+          <div class="hobby-icon"><i class="fa-solid fa-cube"></i></div>
+          <h4>Rubik's Cube Solving</h4>
+          <p>Speed-cubing enthusiast who loves cracking algorithms, both on screen and off.</p>
+        </div>
+        <div class="hobby-card reveal" id="hobby-cricket">
+          <div class="hobby-icon"><i class="fa-solid fa-baseball-bat-ball"></i></div>
+          <h4>Playing Cricket</h4>
+          <p>Team player on the field, bringing the same strategic thinking to every project.</p>
+        </div>
+        <div class="hobby-card reveal" id="hobby-movies">
+          <div class="hobby-icon"><i class="fa-solid fa-film"></i></div>
+          <h4>Watching Movies</h4>
+          <p>Lover of great storytelling, whether on screen or in a well-crafted codebase.</p>
+        </div>
+        <div class="hobby-card reveal" id="hobby-epics">
+          <div class="hobby-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+          <h4>Reading Epics</h4>
+          <p>Captivated by the wisdom in Ramayana, Mahabharata, and classical comics in free time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CONTACT SECTION
+  ========================================== -->
+  <section id="contact" class="section contact-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// get in touch</span>
+        <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+        <p class="section-subtitle">
+          Open to internship opportunities, full-time roles, and exciting collaborations. Feel free to reach out!
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <div class="contact-card" id="contact-phone">
+            <div class="cc-icon"><i class="fa-solid fa-phone"></i></div>
+            <div class="cc-detail">
+              <span class="cc-label">Phone</span>
+              <a href="tel:+916388762269">+91 6388762269</a>
+            </div>
+          </div>
+          <div class="contact-card" id="contact-email-card">
+            <div class="cc-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="cc-detail">
+              <span class="cc-label">Email</span>
+              <a href="mailto:amansharmaa43963114@gmail.com">amansharmaa43963114@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-card" id="contact-github">
+            <div class="cc-icon"><i class="fa-brands fa-github"></i></div>
+            <div class="cc-detail">
+              <span class="cc-label">GitHub</span>
+              <a href="https://github.com/abhishek12-sharma" target="_blank" rel="noopener noreferrer">github.com/abhishek12-sharma</a>
+            </div>
+          </div>
+          <div class="contact-card" id="contact-instagram">
+            <div class="cc-icon"><i class="fa-brands fa-instagram"></i></div>
+            <div class="cc-detail">
+              <span class="cc-label">Instagram</span>
+              <a href="https://www.instagram.com/_abhishek_sharma_12_/" target="_blank" rel="noopener noreferrer">_abhishek_sharma_12_</a>
+            </div>
+          </div>
+          <div class="contact-card" id="contact-location">
+            <div class="cc-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="cc-detail">
+              <span class="cc-label">Location</span>
+              <span>Fatehgarh, Uttar Pradesh 209601</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form reveal reveal-right" id="contactForm" novalidate>
+          <div id="formAlert" class="form-alert" style="display:none;"></div>
+          <div class="form-group">
+            <label for="form-name">Your Name <span class="req">*</span></label>
+            <input type="text" id="form-name" name="from_name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="form-email">Your Email <span class="req">*</span></label>
+            <input type="email" id="form-email" name="from_email" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="form-subject">Subject</label>
+            <input type="text" id="form-subject" name="subject" placeholder="Job Opportunity / Collaboration" />
+          </div>
+          <div class="form-group">
+            <label for="form-message">Message <span class="req">*</span></label>
+            <textarea id="form-message" name="message" rows="5" placeholder="Tell me about the opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full" id="form-submit-btn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span id="btn-text">Send Message</span>
+            <span class="btn-spinner" id="btnSpinner" style="display:none;"></span>
+          </button>
+          <p class="form-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            Messages are delivered directly to Abhishek's inbox.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       FOOTER
+  ========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <span class="logo-bracket">&lt;</span>AS<span class="logo-bracket">/&gt;</span>
+        </div>
+        <p class="footer-text">Designed & Built by <strong>Abhishek Sharma</strong></p>
+        <p class="footer-copy">&copy; <span id="year"></span> Abhishek Sharma. All rights reserved.</p>
+        <a href="admin.html" class="admin-footer-link" id="admin-panel-link" title="Admin Panel">
+          <i class="fa-solid fa-shield-halved"></i> Admin
+        </a>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/abhishek" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://github.com/abhishek12-sharma" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.instagram.com/_abhishek_sharma_12_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="mailto:amansharmaa43963114@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-top" id="backTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

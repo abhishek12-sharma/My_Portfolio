@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel | Abhishek Sharma Portfolio</title>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo"><span class="lb">&lt;</span>AS<span class="lb">/&gt;</span></div>
+      <h2>Admin Panel</h2>
+      <p>Sign in to manage your portfolio</p>
+    </div>
+    <form id="loginForm" class="login-form">
+      <div id="loginError" class="login-error" style="display:none">
+        <i class="fa-solid fa-circle-exclamation"></i> Invalid email or password
+      </div>
+      <div class="field-group">
+        <label for="loginEmail"><i class="fa-solid fa-envelope"></i> Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" required autocomplete="username"/>
+      </div>
+      <div class="field-group">
+        <label for="loginPass"><i class="fa-solid fa-lock"></i> Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password"/>
+          <button type="button" class="pass-eye" id="passEye" aria-label="Show password">
+            <i class="fa-solid fa-eye" id="passEyeIcon"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>Sign In</span>
+      </button>
+    </form>
+    <a href="index.html" class="login-back"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+  </div>
+</div>
+
+<!-- ============ ADMIN SHELL ============ -->
+<div id="adminShell" class="admin-shell" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><span class="lb">&lt;</span>AS<span class="lb">/&gt;</span></div>
+      <button class="sidebar-close" id="sidebarClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Admin Avatar -->
+    <div class="sidebar-user">
+      <div class="sadmin-avatar" id="sidebarAvatar">
+        <img id="sidebarAvatarImg" src="" alt="" style="display:none"/>
+        <span id="sidebarAvatarInitials">AS</span>
+      </div>
+      <div class="sadmin-info">
+        <span class="sadmin-name">Abhishek Sharma</span>
+        <span class="sadmin-role"><i class="fa-solid fa-shield-halved"></i> Administrator</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="#" class="snav-item active" data-section="dashboard" id="snav-dashboard">
+        <i class="fa-solid fa-gauge-high"></i><span>Dashboard</span>
+      </a>
+      <a href="#" class="snav-item" data-section="profile" id="snav-profile">
+        <i class="fa-solid fa-user-circle"></i><span>Profile & Photo</span>
+      </a>
+
+      <div class="nav-group-label">Portfolio Sections</div>
+      <a href="#" class="snav-item" data-section="projects" id="snav-projects">
+        <i class="fa-solid fa-code-branch"></i><span>Projects</span>
+        <span class="snav-badge" id="badge-projects">3</span>
+      </a>
+      <a href="#" class="snav-item" data-section="skills" id="snav-skills">
+        <i class="fa-solid fa-layer-group"></i><span>Skills</span>
+      </a>
+      <a href="#" class="snav-item" data-section="certificates" id="snav-certs">
+        <i class="fa-solid fa-certificate"></i><span>Certificates</span>
+        <span class="snav-badge" id="badge-certs">5</span>
+      </a>
+      <a href="#" class="snav-item" data-section="education" id="snav-edu">
+        <i class="fa-solid fa-graduation-cap"></i><span>Education</span>
+      </a>
+      <a href="#" class="snav-item" data-section="hobbies" id="snav-hobbies">
+        <i class="fa-solid fa-heart"></i><span>Hobbies</span>
+      </a>
+
+      <div class="nav-group-label">Settings</div>
+      <a href="#" class="snav-item" data-section="contact" id="snav-contact">
+        <i class="fa-solid fa-address-card"></i><span>Contact Info</span>
+      </a>
+      <a href="index.html" target="_blank" class="snav-item snav-preview">
+        <i class="fa-solid fa-eye"></i><span>View Portfolio</span>
+        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.65rem;opacity:.6;margin-left:auto"></i>
+      </a>
+      <a href="#" class="snav-item snav-logout" id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="admin-main">
+
+    <!-- TOP BAR -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb">
+          <span id="breadcrumbSection">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="save-indicator" id="saveIndicator" style="display:none">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Saved
+        </div>
+        <a href="index.html" target="_blank" class="topbar-btn">
+          <i class="fa-solid fa-eye"></i> Preview
+        </a>
+        <div class="topbar-avatar" id="topbarAvatar">
+          <img id="topbarAvatarImg" src="" alt="" style="display:none"/>
+          <span id="topbarAvatarInitials">AS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="admin-content" id="adminContent">
+
+      <!-- ========== DASHBOARD ========== -->
+      <section id="sec-dashboard" class="admin-section active">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-gauge-high"></i> Dashboard</h1>
+          <p>Welcome back, Abhishek! Here's your portfolio overview.</p>
+        </div>
+        <div class="dash-stats" id="dashStats">
+          <div class="dash-stat" id="dstat-projects">
+            <div class="ds-icon" style="background:linear-gradient(135deg,#6c63ff,#a855f7)"><i class="fa-solid fa-code-branch"></i></div>
+            <div class="ds-info"><span class="ds-num" id="ds-num-projects">3</span><span class="ds-label">Projects</span></div>
+          </div>
+          <div class="dash-stat" id="dstat-skills">
+            <div class="ds-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2)"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="ds-info"><span class="ds-num" id="ds-num-skills">16</span><span class="ds-label">Skills</span></div>
+          </div>
+          <div class="dash-stat" id="dstat-certs">
+            <div class="ds-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"><i class="fa-solid fa-certificate"></i></div>
+            <div class="ds-info"><span class="ds-num" id="ds-num-certs">5</span><span class="ds-label">Certificates</span></div>
+          </div>
+          <div class="dash-stat" id="dstat-edu">
+            <div class="ds-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="ds-info"><span class="ds-num" id="ds-num-edu">4</span><span class="ds-label">Education</span></div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="dash-quick">
+          <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+          <div class="quick-grid">
+            <button class="quick-btn" onclick="goSection('profile')"><i class="fa-solid fa-camera"></i> Update Photo</button>
+            <button class="quick-btn" onclick="goSection('projects')"><i class="fa-solid fa-plus"></i> Add Project</button>
+            <button class="quick-btn" onclick="goSection('certificates')"><i class="fa-solid fa-plus"></i> Add Certificate</button>
+            <button class="quick-btn" onclick="goSection('contact')"><i class="fa-solid fa-pen"></i> Edit Contact</button>
+          </div>
+        </div>
+
+        <!-- Live preview strip -->
+        <div class="dash-preview-banner">
+          <i class="fa-solid fa-circle-info"></i>
+          All changes are saved to your browser storage and applied instantly on your portfolio page.
+          <a href="index.html" target="_blank">Open Portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </section>
+
+      <!-- ========== PROFILE ========== -->
+      <section id="sec-profile" class="admin-section">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-user-circle"></i> Profile & Photo</h1>
+          <p>Manage your profile photo, personal info, and social links.</p>
+        </div>
+
+        <!-- Photo Manager -->
+        <div class="admin-card" id="photo-manager-card">
+          <div class="card-title"><i class="fa-solid fa-camera"></i> Profile Photo</div>
+
+          <!-- Current Photo -->
+          <div class="photo-preview-row">
+            <div class="photo-preview-circle" id="photoPreviewCircle">
+              <img id="photoPreviewImg" src="" alt="Profile" style="display:none"/>
+              <span id="photoPreviewInitials">AS</span>
+              <div class="photo-overlay" id="photoOverlay" onclick="document.getElementById('photoFileInput').click()">
+                <i class="fa-solid fa-camera"></i><span>Change</span>
+              </div>
+            </div>
+            <div class="photo-preview-info">
+              <h4>Profile Photo</h4>
+              <p>Upload your photo — it will be applied to all selected sections of your portfolio.</p>
+              <div class="photo-actions">
+                <button class="btn-admin btn-primary" onclick="document.getElementById('photoFileInput').click()">
+                  <i class="fa-solid fa-upload"></i> Upload Photo
+                </button>
+                <button class="btn-admin btn-danger" id="removePhotoBtn">
+                  <i class="fa-solid fa-trash"></i> Remove
+                </button>
+              </div>
+              <input type="file" id="photoFileInput" accept="image/*" style="display:none"/>
+            </div>
+          </div>
+
+          <!-- Photo Placement -->
+          <div class="photo-placements">
+            <h4><i class="fa-solid fa-map-pin"></i> Show Photo In</h4>
+            <p>Choose where your photo appears on the portfolio page.</p>
+            <div class="placement-grid">
+              <label class="placement-opt" id="place-hero">
+                <input type="checkbox" id="place-hero-cb" value="hero" checked/>
+                <div class="po-icon"><i class="fa-solid fa-house"></i></div>
+                <span>Hero Section</span>
+                <small>Profile circle at top</small>
+              </label>
+              <label class="placement-opt" id="place-about">
+                <input type="checkbox" id="place-about-cb" value="about"/>
+                <div class="po-icon"><i class="fa-solid fa-user"></i></div>
+                <span>About Section</span>
+                <small>Side portrait card</small>
+              </label>
+              <label class="placement-opt" id="place-contact">
+                <input type="checkbox" id="place-contact-cb" value="contact"/>
+                <div class="po-icon"><i class="fa-solid fa-address-card"></i></div>
+                <span>Contact Section</span>
+                <small>Above contact form</small>
+              </label>
+              <label class="placement-opt" id="place-footer">
+                <input type="checkbox" id="place-footer-cb" value="footer"/>
+                <div class="po-icon"><i class="fa-solid fa-grip-lines"></i></div>
+                <span>Footer</span>
+                <small>Small avatar in footer</small>
+              </label>
+            </div>
+
+            <!-- ── Image Size Customiser ── -->
+            <div class="photo-size-ctrl">
+              <h4><i class="fa-solid fa-expand"></i> Image Size</h4>
+              <p>Drag the slider to resize your profile photo in the Hero section.</p>
+
+              <!-- Live preview bubble -->
+              <div class="size-preview-row">
+                <div class="size-preview-circle" id="sizePreviewCircle">
+                  <img id="sizePreviewImg" src="" alt="" style="display:none"/>
+                  <span id="sizePreviewInitials">AS</span>
+                </div>
+                <div class="size-preview-info">
+                  <div class="size-value-display">
+                    <span id="sizeValueLabel">225</span>
+                    <span class="size-unit">px</span>
+                  </div>
+                  <div class="size-desc">Current photo diameter</div>
+                </div>
+              </div>
+
+              <!-- Slider -->
+              <div class="slider-wrap">
+                <span class="slider-min">150px</span>
+                <input type="range" id="photoSizeSlider" min="150" max="340" step="5" value="225" class="size-slider"/>
+                <span class="slider-max">340px</span>
+              </div>
+
+              <!-- Quick presets -->
+              <div class="size-presets">
+                <button class="preset-btn" data-size="160" id="preset-small">Small</button>
+                <button class="preset-btn" data-size="225" id="preset-medium">Medium</button>
+                <button class="preset-btn" data-size="280" id="preset-large">Large</button>
+                <button class="preset-btn" data-size="330" id="preset-xlarge">X-Large</button>
+              </div>
+            </div>
+
+            <button class="btn-admin btn-primary mt" id="savePhotoBtn">
+              <i class="fa-solid fa-floppy-disk"></i> Save Photo Settings
+            </button>
+          </div>
+        </div>
+
+        <!-- Personal Info -->
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-id-card"></i> Personal Information</div>
+          <div class="form-grid">
+            <div class="field-group">
+              <label>Full Name</label>
+              <input type="text" id="prof-name" value="Abhishek Sharma"/>
+            </div>
+            <div class="field-group">
+              <label>Professional Title</label>
+              <input type="text" id="prof-title" value="Full-Stack Developer | ML Enthusiast"/>
+            </div>
+            <div class="field-group">
+              <label>Location</label>
+              <input type="text" id="prof-location" value="Fatehgarh, Uttar Pradesh 209601"/>
+            </div>
+            <div class="field-group">
+              <label>Phone</label>
+              <input type="text" id="prof-phone" value="+91 6388762269"/>
+            </div>
+            <div class="field-group" style="grid-column:1/-1">
+              <label>Email</label>
+              <input type="email" id="prof-email" value="amansharmaa43963114@gmail.com"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-link"></i> Social Links</div>
+          <div class="form-grid">
+            <div class="field-group">
+              <label><i class="fa-brands fa-linkedin-in" style="color:#0a66c2"></i> LinkedIn URL</label>
+              <input type="url" id="prof-linkedin" value="https://www.linkedin.com/in/abhishek"/>
+            </div>
+            <div class="field-group">
+              <label><i class="fa-brands fa-github"></i> GitHub URL</label>
+              <input type="url" id="prof-github" value="https://github.com/abhishek12-sharma"/>
+            </div>
+            <div class="field-group">
+              <label><i class="fa-brands fa-instagram" style="color:#e1306c"></i> Instagram URL</label>
+              <input type="url" id="prof-instagram" value="https://www.instagram.com/_abhishek_sharma_12_/"/>
+            </div>
+          </div>
+          <button class="btn-admin btn-primary mt" id="saveProfileBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Profile
+          </button>
+        </div>
+      </section>
+
+      <!-- ========== PROJECTS ========== -->
+      <section id="sec-projects" class="admin-section">
+        <div class="page-header between">
+          <div>
+            <h1><i class="fa-solid fa-code-branch"></i> Projects</h1>
+            <p>Manage your portfolio projects.</p>
+          </div>
+          <button class="btn-admin btn-primary" id="addProjectBtn">
+            <i class="fa-solid fa-plus"></i> Add Project
+          </button>
+        </div>
+        <div id="projectsList" class="items-list"></div>
+      </section>
+
+      <!-- ========== SKILLS ========== -->
+      <section id="sec-skills" class="admin-section">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-layer-group"></i> Skills</h1>
+          <p>Add or remove technical and soft skills.</p>
+        </div>
+        <div id="skillsManager" class="skills-manager-grid"></div>
+      </section>
+
+      <!-- ========== CERTIFICATES ========== -->
+      <section id="sec-certificates" class="admin-section">
+        <div class="page-header between">
+          <div>
+            <h1><i class="fa-solid fa-certificate"></i> Certificates</h1>
+            <p>Manage your certifications.</p>
+          </div>
+          <button class="btn-admin btn-primary" id="addCertBtn">
+            <i class="fa-solid fa-plus"></i> Add Certificate
+          </button>
+        </div>
+        <div id="certsList" class="items-list"></div>
+      </section>
+
+      <!-- ========== EDUCATION ========== -->
+      <section id="sec-education" class="admin-section">
+        <div class="page-header between">
+          <div>
+            <h1><i class="fa-solid fa-graduation-cap"></i> Education</h1>
+            <p>Manage your academic history.</p>
+          </div>
+          <button class="btn-admin btn-primary" id="addEduBtn">
+            <i class="fa-solid fa-plus"></i> Add Entry
+          </button>
+        </div>
+        <div id="eduList" class="items-list"></div>
+      </section>
+
+      <!-- ========== HOBBIES ========== -->
+      <section id="sec-hobbies" class="admin-section">
+        <div class="page-header between">
+          <div>
+            <h1><i class="fa-solid fa-heart"></i> Hobbies</h1>
+            <p>Showcase your interests outside of tech.</p>
+          </div>
+          <button class="btn-admin btn-primary" id="addHobbyBtn">
+            <i class="fa-solid fa-plus"></i> Add Hobby
+          </button>
+        </div>
+        <div id="hobbiesList" class="items-list hobbies-grid-list"></div>
+      </section>
+
+      <!-- ========== CONTACT ========== -->
+      <section id="sec-contact" class="admin-section">
+        <div class="page-header">
+          <h1><i class="fa-solid fa-address-card"></i> Contact Info</h1>
+          <p>Update the contact details shown on your portfolio.</p>
+        </div>
+        <div class="admin-card">
+          <div class="card-title"><i class="fa-solid fa-phone"></i> Contact Details</div>
+          <div class="form-grid">
+            <div class="field-group">
+              <label>Phone Number</label>
+              <input type="text" id="contact-phone" value="+91 6388762269"/>
+            </div>
+            <div class="field-group">
+              <label>Email Address</label>
+              <input type="email" id="contact-email" value="amansharmaa43963114@gmail.com"/>
+            </div>
+            <div class="field-group">
+              <label>Location / Address</label>
+              <input type="text" id="contact-location" value="Fatehgarh, Uttar Pradesh 209601"/>
+            </div>
+            <div class="field-group">
+              <label><i class="fa-brands fa-github"></i> GitHub Profile URL</label>
+              <input type="url" id="contact-github" value="https://github.com/abhishek12-sharma"/>
+            </div>
+            <div class="field-group">
+              <label><i class="fa-brands fa-instagram"></i> Instagram URL</label>
+              <input type="url" id="contact-instagram" value="https://www.instagram.com/_abhishek_sharma_12_/"/>
+            </div>
+            <div class="field-group">
+              <label><i class="fa-brands fa-linkedin-in"></i> LinkedIn URL</label>
+              <input type="url" id="contact-linkedin" value="https://www.linkedin.com/in/abhishek"/>
+            </div>
+          </div>
+          <button class="btn-admin btn-primary mt" id="saveContactBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Contact Info
+          </button>
+        </div>
+      </section>
+
+    </main><!-- /admin-content -->
+  </div><!-- /admin-main -->
+</div><!-- /adminShell -->
+
+<!-- ========== MODAL ========== -->
+<div class="modal-overlay" id="modalOverlay" style="display:none">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <h3 id="modalTitle">Add Item</h3>
+      <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-admin btn-ghost" id="modalCancelBtn">Cancel</button>
+      <button class="btn-admin btn-primary" id="modalSaveBtn">
+        <i class="fa-solid fa-floppy-disk"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>
